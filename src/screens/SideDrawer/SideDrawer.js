@@ -1,10 +1,14 @@
 import React from 'react';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import rn, { View, Text, Dimensions, StyleSheet } from 'react-native';
 import Link from '~/src/components/UI/Link/Link';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const LogoutIcon = () => (
-	<Icon name={'ios-log-out'} size={20} color={'black'} />
+	<Icon
+		name={rn.Platform.OS === 'android' ? 'md-log-out' : 'ios-log-out'}
+		size={20}
+		color={'black'}
+	/>
 );
 
 class SideDrawer extends React.Component {
@@ -24,8 +28,8 @@ const s = StyleSheet.create({
 		paddingRight: 10,
 		backgroundColor: 'white',
 		width: Dimensions.get('window').width * 0.9,
-		flex: 1,
-	},
+		flex: 1
+	}
 });
 
 export default SideDrawer;

@@ -3,6 +3,7 @@ import { Navigation } from 'react-native-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Provider } from 'react-redux';
 import configureStore from '../store/configureStore';
+import rn from 'react-native';
 
 const store = configureStore();
 
@@ -34,9 +35,18 @@ export function registerScreens() {
 
 export function initTabBasedNavigation() {
 	Promise.all([
-		Icon.getImageSource('md-map', 30),
-		Icon.getImageSource('ios-share-alt', 30),
-		Icon.getImageSource('ios-menu', 30)
+		Icon.getImageSource(
+			rn.Platform.OS === 'android' ? 'md-map' : 'ios-map',
+			30
+		),
+		Icon.getImageSource(
+			rn.Platform.OS === 'android' ? 'md-share-alt' : 'ios-share',
+			30
+		),
+		Icon.getImageSource(
+			rn.Platform.OS === 'android' ? 'md-menu' : 'ios-menu',
+			30
+		)
 	]).then(([icon1, icon2, icon3]) => {
 		Navigation.setRoot({
 			root: {
