@@ -3,16 +3,15 @@ import { Text, StyleSheet } from 'react-native';
 
 function HeadingText(props) {
 	return (
-		<Text {...props} style={s.textHeading}>
+		<Text {...props} style={s.mainText}>
 			{props.children}
 		</Text>
 	);
 }
 
 const s = StyleSheet.create({
-	textHeading: {
-		fontWeight: 'bold',
-		fontSize: 28,
+	mainText: {
+		color: 'black',
 	},
 });
 

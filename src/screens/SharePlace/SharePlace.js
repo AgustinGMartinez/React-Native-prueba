@@ -1,11 +1,19 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Button, ScrollView, Image } from 'react-native';
 import PlaceInput from '~/src/components/PlaceInput/PlaceInput';
 import { connect } from 'react-redux';
 import * as actions from '../../actions/places';
 import { Navigation } from 'react-native-navigation';
+import MainText from '~/src/components/UI/MainText/MainText';
+import HeadingText from '~/src/components/UI/HeadingText/HeadingText';
+import ImagePicker from '~/src/components/ImagePicker/ImagePicker';
+import MapLocation from '~/src/components/MapLocation/MapLocation';
 
 class SharePlace extends React.Component {
+	state = {
+		placeName: '',
+	};
+
 	componentDidMount() {
 		this.navigationEventListener = Navigation.events().bindComponent(this);
 	}
@@ -24,24 +32,48 @@ class SharePlace extends React.Component {
 		Navigation.mergeOptions('drawerMenu', {
 			sideMenu: {
 				left: {
-					visible: true
-				}
-			}
+					visible: true,
+				},
+			},
 		});
 	}
+
+	addPlace = () => {
+		const placeName = this.state.placeName;
+		if (placeName.trim() !== '') this.props.addPlace(placeName.trim());
+		else alert('Not empty name allowed');
+	};
+
 	render() {
 		return (
-			<View style={s.container}>
-				<PlaceInput onPlaceAdded={this.props.addPlace} />
-			</View>
+			<ScrollView>
+				<View style={s.container}>
+					<MainText>
+						<HeadingText>¡Compartí un lugar!</HeadingText>
+					</MainText>
+					<ImagePicker />
+					<MapLocation />
+					<PlaceInput
+						subscribe={val => this.setState({ placeName: val })}
+					/>
+					<View style={s.button}>
+						<Button
+							title="¡Compartir lugar!"
+							onPress={this.addPlace}
+						/>
+					</View>
+				</View>
+			</ScrollView>
 		);
 	}
 }
 
 const s = StyleSheet.create({
 	container: {
-		margin: 20
-	}
+		margin: 20,
+		flex: 1,
+		alignItems: 'center',
+	},
 });
 
 export default connect(

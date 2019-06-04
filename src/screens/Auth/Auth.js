@@ -1,14 +1,21 @@
 import React from 'react';
-import { View, Button, StyleSheet, Dimensions } from 'react-native';
+import {
+	View,
+	Button,
+	StyleSheet,
+	Dimensions,
+	ImageBackground
+} from 'react-native';
 import { initTabBasedNavigation } from '../index';
 import DefaultInput from '~/src/components/UI/DefaultInput/DefaultInput';
 import HeadingText from '~/src/components/UI/HeadingText/HeadingText';
+import BackgroundImage from '~/src/assets/background.jpg';
 
 const loginHandler = () => initTabBasedNavigation();
 
 const auth = () => {
 	return (
-		<View style={s.container}>
+		<ImageBackground source={BackgroundImage} style={s.container}>
 			<HeadingText>Por favor, ingresar</HeadingText>
 			<Button title="Registrarse" />
 			<View style={s.inputContainer}>
@@ -17,7 +24,7 @@ const auth = () => {
 				<DefaultInput style={s.input} placeholder="Confirm password" />
 			</View>
 			<Button title="Ingresar" onPress={loginHandler} />
-		</View>
+		</ImageBackground>
 	);
 };
 
@@ -25,7 +32,8 @@ const s = StyleSheet.create({
 	container: {
 		height: Dimensions.get('window').height,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		width: '100%'
 	},
 	inputContainer: {
 		width: '80%'
