@@ -34,6 +34,19 @@ export function registerScreens() {
 }
 
 export function initTabBasedNavigation() {
+	Navigation.setDefaultOptions({
+		bottomTabs: {
+			titleDisplayMode: 'alwaysHide',
+			elevation: 16
+		},
+		topBar: {
+			backButton: {
+				color: 'blue'
+			},
+			leftButtonColor: 'blue'
+		}
+	});
+
 	Promise.all([
 		Icon.getImageSource(
 			rn.Platform.OS === 'android' ? 'md-map' : 'ios-map',
@@ -75,13 +88,15 @@ export function initTabBasedNavigation() {
 														topBar: {
 															title: {
 																text:
-																	'Find a Place'
+																	'Explorar Lugar'
 															},
 															leftButtons: [
 																{
 																	id:
 																		'sideMenuButton',
-																	icon: icon3
+																	icon: icon3,
+																	iconColor:
+																		'blue'
 																}
 															]
 														}
@@ -93,7 +108,8 @@ export function initTabBasedNavigation() {
 										options: {
 											bottomTab: {
 												text: 'Find Place',
-												icon: icon1
+												icon: icon1,
+												selectedIconColor: 'blue'
 											}
 										}
 									}
@@ -109,7 +125,7 @@ export function initTabBasedNavigation() {
 														topBar: {
 															title: {
 																text:
-																	'Share a Place'
+																	'Compartir Lugar'
 															},
 															leftButtons: [
 																{
@@ -127,7 +143,8 @@ export function initTabBasedNavigation() {
 										options: {
 											bottomTab: {
 												text: 'Share Place',
-												icon: icon2
+												icon: icon2,
+												selectedIconColor: 'blue'
 											}
 										}
 									}

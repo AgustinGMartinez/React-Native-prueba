@@ -7,11 +7,11 @@ function Link({ children, onPress, style, Icon }) {
 			<View style={s.container}>
 				{Icon && (
 					<>
-						<Icon />
+						<Icon style={s.common} />
 						<View style={s.space} />
 					</>
 				)}
-				<Text style={[s.text, style]}>{children}</Text>
+				<Text style={[s.text, s.common]}>{children}</Text>
 			</View>
 		</TouchableOpacity>
 	);
@@ -20,14 +20,17 @@ function Link({ children, onPress, style, Icon }) {
 const s = StyleSheet.create({
 	container: {
 		flexDirection: 'row',
+		alignItems: 'center'
 	},
 	text: {
-		color: 'blue',
-		flex: 1,
+		flex: 1
 	},
 	space: {
-		width: 10,
+		width: 20
 	},
+	common: {
+		fontSize: 20
+	}
 });
 
 export default Link;

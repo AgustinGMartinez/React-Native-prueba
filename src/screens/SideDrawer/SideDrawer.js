@@ -7,7 +7,7 @@ const LogoutIcon = () => (
 	<Icon
 		name={rn.Platform.OS === 'android' ? 'md-log-out' : 'ios-log-out'}
 		size={20}
-		color={'black'}
+		color={'blue'}
 	/>
 );
 
