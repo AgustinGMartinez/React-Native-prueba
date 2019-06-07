@@ -3,25 +3,7 @@ import { StyleSheet, FlatList } from 'react-native';
 import ListItem from '../ListItem/ListItem';
 import { Navigation } from 'react-native-navigation';
 
-const placeList = props => {
-	const handlePlacePressed = item => {
-		Navigation.push(props.componentId, {
-			component: {
-				name: 'pruebarn.PlaceDetail',
-				passProps: {
-					selectedPlace: item
-				},
-				options: {
-					topBar: {
-						title: {
-							text: 'Place Details'
-						}
-					}
-				}
-			}
-		});
-	};
-
+function placeList(props) {
 	return (
 		<FlatList
 			style={styles.listContainer}
@@ -30,17 +12,38 @@ const placeList = props => {
 				<ListItem
 					placeName={info.item.name}
 					placeImage={info.item.image}
-					onItemPressed={() => handlePlacePressed(info.item)}
+					onItemPressed={() =>
+						handlePlacePressed(info.item, props.componentId)
+					}
+					index={info.index}
 				/>
 			)}
 		/>
 	);
-};
+}
 
 const styles = StyleSheet.create({
 	listContainer: {
-		width: '100%'
-	}
+		width: '100%',
+	},
 });
+
+const handlePlacePressed = (item, componentId) => {
+	Navigation.push(componentId, {
+		component: {
+			name: 'pruebarn.PlaceDetail',
+			passProps: {
+				selectedPlace: item,
+			},
+			options: {
+				topBar: {
+					title: {
+						text: 'Detalles del lugar',
+					},
+				},
+			},
+		},
+	});
+};
 
 export default placeList;

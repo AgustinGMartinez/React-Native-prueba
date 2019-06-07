@@ -7,11 +7,43 @@ const initialState = {
 			name: 'ejemplo',
 			image: {
 				uri:
-					'https://c1.staticflickr.com/5/4096/4744241983_34023bf303_b.jpg'
-			}
-		}
+					'https://c1.staticflickr.com/5/4096/4744241983_34023bf303_b.jpg',
+			},
+		},
+		{
+			key: 'a' + Math.random(),
+			name: 'ejemplo',
+			image: {
+				uri:
+					'https://c1.staticflickr.com/5/4096/4744241983_34023bf303_b.jpg',
+			},
+		},
+		{
+			key: 'a' + Math.random(),
+			name: 'ejemplo',
+			image: {
+				uri:
+					'https://c1.staticflickr.com/5/4096/4744241983_34023bf303_b.jpg',
+			},
+		},
+		{
+			key: 'a' + Math.random(),
+			name: 'ejemplo',
+			image: {
+				uri:
+					'https://c1.staticflickr.com/5/4096/4744241983_34023bf303_b.jpg',
+			},
+		},
+		{
+			key: 'a' + Math.random(),
+			name: 'ejemplo',
+			image: {
+				uri:
+					'https://c1.staticflickr.com/5/4096/4744241983_34023bf303_b.jpg',
+			},
+		},
 	],
-	selectedPlace: null
+	selectedPlace: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -23,8 +55,8 @@ const reducer = (state = initialState, action) => {
 				name: action.placeName,
 				image: {
 					uri:
-						'https://c1.staticflickr.com/5/4096/4744241983_34023bf303_b.jpg'
-				}
+						'https://c1.staticflickr.com/5/4096/4744241983_34023bf303_b.jpg',
+				},
 			});
 			return newState;
 		case DELETE_PLACE:
