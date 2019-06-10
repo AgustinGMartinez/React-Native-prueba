@@ -33,18 +33,41 @@ export function registerScreens() {
 	);
 }
 
+export function initAuthNavigation() {
+	Navigation.setRoot({
+		root: {
+			stack: {
+				children: [
+					{
+						component: {
+							name: 'pruebarn.Auth',
+							options: {
+								topBar: {
+									title: {
+										text: 'Ingresar',
+									},
+								},
+							},
+						},
+					},
+				],
+			},
+		},
+	});
+}
+
 export function initTabBasedNavigation() {
 	Navigation.setDefaultOptions({
 		bottomTabs: {
 			titleDisplayMode: 'alwaysHide',
-			elevation: 16
+			elevation: 16,
 		},
 		topBar: {
 			backButton: {
-				color: 'blue'
+				color: 'blue',
 			},
-			leftButtonColor: 'blue'
-		}
+			leftButtonColor: 'blue',
+		},
 	});
 
 	Promise.all([
@@ -59,7 +82,7 @@ export function initTabBasedNavigation() {
 		Icon.getImageSource(
 			rn.Platform.OS === 'android' ? 'md-menu' : 'ios-menu',
 			30
-		)
+		),
 	]).then(([icon1, icon2, icon3]) => {
 		Navigation.setRoot({
 			root: {
@@ -67,8 +90,8 @@ export function initTabBasedNavigation() {
 					left: {
 						component: {
 							name: 'pruebarn.SideDrawer',
-							id: 'drawerMenu'
-						}
+							id: 'drawerMenu',
+						},
 					},
 					center: {
 						// tabs
@@ -87,32 +110,29 @@ export function initTabBasedNavigation() {
 													options: {
 														topBar: {
 															title: {
-																text:
-																	'Explorar Lugar'
+																text: 'Explorar Lugar',
 															},
 															leftButtons: [
 																{
-																	id:
-																		'sideMenuButton',
+																	id: 'sideMenuButton',
 																	icon: icon3,
-																	iconColor:
-																		'blue'
-																}
-															]
-														}
-													}
-												}
-											}
+																	iconColor: 'blue',
+																},
+															],
+														},
+													},
+												},
+											},
 										],
 										// tab options such as text and icon
 										options: {
 											bottomTab: {
 												text: 'Find Place',
 												icon: icon1,
-												selectedIconColor: 'blue'
-											}
-										}
-									}
+												selectedIconColor: 'blue',
+											},
+										},
+									},
 								},
 								{
 									stack: {
@@ -124,36 +144,34 @@ export function initTabBasedNavigation() {
 													options: {
 														topBar: {
 															title: {
-																text:
-																	'Compartir Lugar'
+																text: 'Compartir Lugar',
 															},
 															leftButtons: [
 																{
-																	id:
-																		'sideMenuButton',
-																	icon: icon3
-																}
-															]
-														}
-													}
-												}
-											}
+																	id: 'sideMenuButton',
+																	icon: icon3,
+																},
+															],
+														},
+													},
+												},
+											},
 										],
 										// tab options such as text and icon
 										options: {
 											bottomTab: {
 												text: 'Share Place',
 												icon: icon2,
-												selectedIconColor: 'blue'
-											}
-										}
-									}
-								}
-							]
-						}
-					}
-				}
-			}
+												selectedIconColor: 'blue',
+											},
+										},
+									},
+								},
+							],
+						},
+					},
+				},
+			},
 		});
 	});
 }

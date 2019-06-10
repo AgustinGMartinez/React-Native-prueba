@@ -2,6 +2,7 @@ import React from 'react';
 import rn, { View, Text, Dimensions, StyleSheet } from 'react-native';
 import Link from '~/src/components/UI/Link/Link';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { initAuthNavigation } from '~src/screens';
 
 const LogoutIcon = () => (
 	<Icon
@@ -15,7 +16,9 @@ class SideDrawer extends React.Component {
 	render() {
 		return (
 			<View style={[s.container]}>
-				<Link Icon={LogoutIcon}>Cerrar sesión</Link>
+				<Link Icon={LogoutIcon} action={initAuthNavigation}>
+					Cerrar sesión
+				</Link>
 			</View>
 		);
 	}
@@ -28,8 +31,8 @@ const s = StyleSheet.create({
 		paddingRight: 10,
 		backgroundColor: 'white',
 		width: Dimensions.get('window').width * 0.9,
-		flex: 1
-	}
+		flex: 1,
+	},
 });
 
 export default SideDrawer;

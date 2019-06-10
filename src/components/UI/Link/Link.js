@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
-function Link({ children, onPress, style, Icon }) {
+function Link({ children, style, Icon, action }) {
 	return (
-		<TouchableOpacity onPress={onPress}>
+		<TouchableOpacity onPress={action}>
 			<View style={s.container}>
 				{Icon && (
 					<>
@@ -20,17 +20,17 @@ function Link({ children, onPress, style, Icon }) {
 const s = StyleSheet.create({
 	container: {
 		flexDirection: 'row',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 	text: {
-		flex: 1
+		flex: 1,
 	},
 	space: {
-		width: 20
+		width: 20,
 	},
 	common: {
-		fontSize: 20
-	}
+		fontSize: 20,
+	},
 });
 
 export default Link;
