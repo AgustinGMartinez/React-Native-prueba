@@ -10,14 +10,26 @@ import { initTabBasedNavigation } from '../index';
 import DefaultInput from '~/src/components/UI/DefaultInput/DefaultInput';
 import HeadingText from '~/src/components/UI/HeadingText/HeadingText';
 import BackgroundImage from '~/src/assets/background.jpg';
+import { connect } from 'react-redux';
+import { tryAuth } from '~/src/actions/authActions';
 
-const loginHandler = () => initTabBasedNavigation();
+const loginHandler = (props, email, password) => {
+	props.onLogin({ email, password });
+	initTabBasedNavigation();
+};
+
 let currentPassword = {
 	value: undefined,
 	label: 'contraseña',
 };
 
-function auth() {
+const registrationHandler = (props, email, password) => {
+	props.onRegistration({ email, password });
+	initTabBasedNavigation();
+};
+
+function auth(props) {
+	const [mode, setMode] = useState('login');
 	const [email, setEmail] = useState({
 		value: '',
 		isValid: false,
@@ -28,6 +40,9 @@ function auth() {
 		rules: {
 			isEmail: true,
 		},
+		autoCorrect: false,
+		autoCapitalize: 'none',
+		keyboardType: 'email-address',
 	});
 	const [password, setPassword] = useState({
 		value: '',
@@ -40,6 +55,8 @@ function auth() {
 			minLength: 6,
 		},
 		secureTextEntry: true,
+		autoCorrect: false,
+		autoCapitalize: 'none',
 	});
 	const [confirmPassword, setConfirmPassword] = useState({
 		value: '',
@@ -52,19 +69,28 @@ function auth() {
 			equals: currentPassword,
 		},
 		secureTextEntry: true,
+		autoCorrect: false,
+		autoCapitalize: 'none',
 	});
 
 	currentPassword.value = password.value;
 
-	const handleChangeText = (text = null, state, update, covalidate = null) => {
+	const handleChangeText = (
+		text = null,
+		state,
+		update,
+		covalidate = null
+	) => {
 		let keepPure = false;
-		// for covalidation we use its current value, not a new one
+		// for covalidation we use its current value, because there is no new one
 		if (text === null) {
 			text = state.value;
-			keepPure = true;
+			keepPure = true; // keep untouched if that's the case
 		}
 		if (covalidate) {
-			setTimeout(() => handleChangeText(null, covalidate[0], covalidate[1]));
+			setTimeout(() =>
+				handleChangeText(null, covalidate[0], covalidate[1])
+			);
 		}
 
 		const commonUpdates = {
@@ -104,17 +130,34 @@ function auth() {
 		return update({ ...commonUpdates, isValid: true, error: null });
 	};
 
-	const allValid = email.isValid && password.isValid && confirmPassword.isValid;
+	const allValidLogin = email.isValid && password.isValid;
+	const allValidRegistration =
+		email.isValid && password.isValid && confirmPassword.isValid;
 
 	return (
 		<ImageBackground source={BackgroundImage} style={s.container}>
-			<HeadingText>Por favor, ingresar</HeadingText>
-			<Button title="Registrarse" />
+			<HeadingText>
+				Por favor, {mode === 'login' ? 'ingresá' : 'registrate'}
+			</HeadingText>
+			<Button
+				title={
+					mode === 'login'
+						? 'Cambiar a Registrarse'
+						: 'Cambiar a Login'
+				}
+				onPress={() =>
+					setMode(prev =>
+						prev === 'login' ? 'registration' : 'login'
+					)
+				}
+			/>
 			<View style={s.inputContainer}>
 				<DefaultInput
 					style={s.input}
 					{...email}
-					onChangeText={text => handleChangeText(text, email, setEmail)}
+					onChangeText={text =>
+						handleChangeText(text, email, setEmail)
+					}
 				/>
 				<DefaultInput
 					style={s.input}
@@ -126,15 +169,33 @@ function auth() {
 						])
 					}
 				/>
-				<DefaultInput
-					style={s.input}
-					{...confirmPassword}
-					onChangeText={text =>
-						handleChangeText(text, confirmPassword, setConfirmPassword)
-					}
-				/>
+				{mode === 'registration' && (
+					<DefaultInput
+						style={s.input}
+						{...confirmPassword}
+						onChangeText={text =>
+							handleChangeText(
+								text,
+								confirmPassword,
+								setConfirmPassword
+							)
+						}
+					/>
+				)}
 			</View>
-			<Button title="Ingresar" onPress={loginHandler} disabled={!allValid} />
+			{mode === 'login' ? (
+				<Button
+					title="Ingresar"
+					onPress={() => loginHandler(props, email, password)}
+					disabled={!allValidLogin}
+				/>
+			) : (
+				<Button
+					title="Registrarse"
+					onPress={() => registrationHandler(props, email, password)}
+					disabled={!allValidRegistration}
+				/>
+			)}
 		</ImageBackground>
 	);
 }
@@ -155,4 +216,14 @@ const s = StyleSheet.create({
 	},
 });
 
-export default auth;
+const mapDispatchToProps = dispatch => {
+	return {
+		onLogin: authData => dispatch(tryAuth(authData)),
+		onRegistration: authData => null,
+	};
+};
+
+export default connect(
+	null,
+	mapDispatchToProps
+)(auth);
