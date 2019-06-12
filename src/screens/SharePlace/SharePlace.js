@@ -7,7 +7,7 @@ import { Navigation } from 'react-native-navigation';
 import MainText from '~/src/components/UI/MainText/MainText';
 import HeadingText from '~/src/components/UI/HeadingText/HeadingText';
 import ImagePicker from '~/src/components/ImagePicker/ImagePicker';
-import MapLocation from '~/src/components/MapLocation/MapLocation';
+import MapPicker from '~/src/components/MapPicker/MapPicker';
 
 class SharePlace extends React.Component {
 	state = {
@@ -52,7 +52,7 @@ class SharePlace extends React.Component {
 						<HeadingText>¡Compartí un lugar!</HeadingText>
 					</MainText>
 					<ImagePicker />
-					<MapLocation />
+					<MapPicker />
 					<PlaceInput
 						subscribe={val => this.setState({ placeName: val })}
 					/>
@@ -60,6 +60,7 @@ class SharePlace extends React.Component {
 						<Button
 							title="¡Compartir lugar!"
 							onPress={this.addPlace}
+							disabled={this.state.placeName.length === 0}
 						/>
 					</View>
 				</View>
@@ -70,7 +71,6 @@ class SharePlace extends React.Component {
 
 const s = StyleSheet.create({
 	container: {
-		margin: 20,
 		flex: 1,
 		alignItems: 'center',
 	},
