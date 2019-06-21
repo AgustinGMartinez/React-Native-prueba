@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import {
 	View,
 	Button,
@@ -75,12 +75,7 @@ function auth(props) {
 
 	currentPassword.value = password.value;
 
-	const handleChangeText = (
-		text = null,
-		state,
-		update,
-		covalidate = null
-	) => {
+	const handleChangeText = (text = null, state, update, covalidate = null) => {
 		let keepPure = false;
 		// for covalidation we use its current value, because there is no new one
 		if (text === null) {
@@ -88,9 +83,7 @@ function auth(props) {
 			keepPure = true; // keep untouched if that's the case
 		}
 		if (covalidate) {
-			setTimeout(() =>
-				handleChangeText(null, covalidate[0], covalidate[1])
-			);
+			setTimeout(() => handleChangeText(null, covalidate[0], covalidate[1]));
 		}
 
 		const commonUpdates = {
@@ -140,24 +133,16 @@ function auth(props) {
 				Por favor, {mode === 'login' ? 'ingresá' : 'registrate'}
 			</HeadingText>
 			<Button
-				title={
-					mode === 'login'
-						? 'Cambiar a Registrarse'
-						: 'Cambiar a Login'
-				}
+				title={mode === 'login' ? 'Cambiar a Registrarse' : 'Cambiar a Login'}
 				onPress={() =>
-					setMode(prev =>
-						prev === 'login' ? 'registration' : 'login'
-					)
+					setMode(prev => (prev === 'login' ? 'registration' : 'login'))
 				}
 			/>
 			<View style={s.inputContainer}>
 				<DefaultInput
 					style={s.input}
 					{...email}
-					onChangeText={text =>
-						handleChangeText(text, email, setEmail)
-					}
+					onChangeText={text => handleChangeText(text, email, setEmail)}
 				/>
 				<DefaultInput
 					style={s.input}
@@ -174,11 +159,7 @@ function auth(props) {
 						style={s.input}
 						{...confirmPassword}
 						onChangeText={text =>
-							handleChangeText(
-								text,
-								confirmPassword,
-								setConfirmPassword
-							)
+							handleChangeText(text, confirmPassword, setConfirmPassword)
 						}
 					/>
 				)}
@@ -187,7 +168,7 @@ function auth(props) {
 				<Button
 					title="Ingresar"
 					onPress={() => loginHandler(props, email, password)}
-					disabled={!allValidLogin}
+					// disabled={!allValidLogin}
 				/>
 			) : (
 				<Button
