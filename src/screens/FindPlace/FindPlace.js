@@ -4,7 +4,7 @@ import {
 	Text,
 	StyleSheet,
 	TouchableOpacity,
-	Animated
+	Animated,
 } from 'react-native';
 import { connect } from 'react-redux';
 import PlaceList from '../../components/PlaceList/PlaceList';
@@ -13,7 +13,7 @@ import { Navigation } from 'react-native-navigation';
 class FindPlace extends React.Component {
 	state = {
 		isLoaded: false,
-		openingAnimation: new Animated.Value(1)
+		openingAnimation: new Animated.Value(1),
 	};
 
 	componentDidMount() {
@@ -34,9 +34,9 @@ class FindPlace extends React.Component {
 		Navigation.mergeOptions('drawerMenu', {
 			sideMenu: {
 				left: {
-					visible: true
-				}
-			}
+					visible: true,
+				},
+			},
 		});
 	}
 
@@ -44,7 +44,7 @@ class FindPlace extends React.Component {
 		Animated.timing(this.state.openingAnimation, {
 			duration: 500,
 			toValue: 0,
-			useNativeDriver: true
+			useNativeDriver: true,
 		}).start(() => {
 			this.setState({ isLoaded: true });
 		});
@@ -65,10 +65,10 @@ class FindPlace extends React.Component {
 							{
 								scale: this.state.openingAnimation.interpolate({
 									inputRange: [0, 1],
-									outputRange: [12, 1]
-								})
-							}
-						]
+									outputRange: [12, 1],
+								}),
+							},
+						],
 					}}
 				>
 					<TouchableOpacity onPress={this.onPlacesSearchHandle}>
@@ -78,12 +78,9 @@ class FindPlace extends React.Component {
 					</TouchableOpacity>
 				</Animated.View>
 			);
-		} else
-			content = <PlaceList places={places} componentId={componentId} />;
+		} else content = <PlaceList places={places} componentId={componentId} />;
 
-		return (
-			<View style={isLoaded ? null : s.buttonContainer}>{content}</View>
-		);
+		return <View style={isLoaded ? null : s.buttonContainer}>{content}</View>;
 	}
 }
 
@@ -91,23 +88,23 @@ const s = StyleSheet.create({
 	buttonContainer: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 	searchButton: {
 		borderColor: 'orange',
 		borderWidth: 3,
 		borderRadius: 50,
-		padding: 20
+		padding: 20,
 	},
 	searchText: {
 		fontSize: 26,
 		color: 'orange',
-		textAlign: 'center'
-	}
+		textAlign: 'center',
+	},
 });
 
 const mapStateToProps = state => ({
-	places: state.places.places
+	places: state.sharePlace.places,
 });
 
 export default connect(mapStateToProps)(FindPlace);

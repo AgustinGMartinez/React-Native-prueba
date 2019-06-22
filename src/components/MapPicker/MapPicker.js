@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
 	StyleSheet,
 	View,
@@ -7,8 +7,12 @@ import {
 	PermissionsAndroid,
 } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { connect } from 'react-redux';
+import sharePlaceActions from '../../actions/sharePlaceActions';
 
-function MapPicker() {
+function MapPicker(props) {
+	// ----------------------------- VARS AND STATES --------------------------------
+
 	let mapRef = useRef();
 	const [mapState, setMapState] = useState({
 		latitude: -34.605013,
@@ -19,6 +23,8 @@ function MapPicker() {
 			0.0122,
 		centerUser: false,
 	});
+
+	// ----------------------------- FUNCTIONS --------------------------------
 
 	function handleRegionChange(e) {
 		setMapState({ ...mapState, ...e });
@@ -37,25 +43,40 @@ function MapPicker() {
 				}
 			);
 			if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-				navigator.geolocation.getCurrentPosition(pos => {
-					setMapState({
-						...mapState,
-						...pos.coords,
-					});
-					mapRef.current.animateToRegion({ ...mapState, ...pos.coords });
-				}, console.warn);
+				navigator.geolocation.getCurrentPosition(
+					pos => {
+						setMapState({
+							...mapState,
+							...pos.coords,
+						});
+						mapRef.current.animateToRegion({ ...mapState, ...pos.coords });
+					},
+					err => {
+						console.warn(err);
+						alert('No podemos establecer tu ubicación, elígela manualmente.');
+					}
+				);
 			} else {
-				console.warn('Localization permission denied');
+				alert('No podemos establecer tu ubicación, elígela manualmente.');
 			}
 		} catch (err) {
 			console.warn(err);
+			alert('No podemos establecer tu ubicación, elígela manualmente.');
 		}
-		// setMapState({ ...mapState, centerUser: true });
-		// setTimeout(() => {
-		// 	setMapState({ ...mapState, centerUser: false });
-		// });
 	}
 
+	// ----------------------------- EFFECTS --------------------------------
+
+	useEffect(() => {
+		props.saveLocation({
+			latitude: mapState.latitude,
+			longitude: mapState.longitude,
+			latitudeDelta: mapState.latitudeDelta,
+			longitudeDelta: mapState.longitudeDelta,
+		});
+	}, [mapState]);
+
+	// ----------------------------- RENDER --------------------------------
 	return (
 		<>
 			<MapView
@@ -89,4 +110,7 @@ const s = StyleSheet.create({
 	},
 });
 
-export default MapPicker;
+export default connect(
+	null,
+	sharePlaceActions
+)(MapPicker);

@@ -6,12 +6,12 @@ import {
 	Button,
 	StyleSheet,
 	TouchableOpacity,
-	Platform
+	Platform,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
-import * as actions from '~/src/actions/places';
+import actions from '~/src/actions/sharePlaceActions';
 import { Navigation } from 'react-native-navigation';
 
 class PlaceDetail extends React.Component {
@@ -28,20 +28,14 @@ class PlaceDetail extends React.Component {
 						source={this.props.selectedPlace.image}
 						style={styles.placeImage}
 					/>
-					<Text style={styles.placeName}>
-						{this.props.selectedPlace.name}
-					</Text>
+					<Text style={styles.placeName}>{this.props.selectedPlace.name}</Text>
 				</View>
 				<View>
 					<TouchableOpacity onPress={this.onItemDeleted}>
 						<View style={styles.deleteButton}>
 							<Icon
 								size={30}
-								name={
-									Platform.OS === 'andriod'
-										? 'md-trash'
-										: 'ios-trash'
-								}
+								name={Platform.OS === 'andriod' ? 'md-trash' : 'ios-trash'}
 								color="red"
 							/>
 						</View>
@@ -54,20 +48,20 @@ class PlaceDetail extends React.Component {
 
 const styles = StyleSheet.create({
 	continaer: {
-		margin: 22
+		margin: 22,
 	},
 	placeImage: {
 		width: '100%',
-		height: 200
+		height: 200,
 	},
 	placeName: {
 		fontWeight: 'bold',
 		textAlign: 'center',
-		fontSize: 28
+		fontSize: 28,
 	},
 	deleteButton: {
-		alignItems: 'center'
-	}
+		alignItems: 'center',
+	},
 });
 
 export default connect(

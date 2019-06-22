@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Button, ScrollView, Image } from 'react-native';
 import PlaceInput from '~/src/components/PlaceInput/PlaceInput';
 import { connect } from 'react-redux';
-import * as actions from '../../actions/places';
+import sharePlaceActions from '../../actions/sharePlaceActions';
 import { Navigation } from 'react-native-navigation';
 import MainText from '~/src/components/UI/MainText/MainText';
 import HeadingText from '~/src/components/UI/HeadingText/HeadingText';
@@ -53,9 +53,7 @@ class SharePlace extends React.Component {
 					</MainText>
 					<ImagePicker />
 					<MapPicker />
-					<PlaceInput
-						subscribe={val => this.setState({ placeName: val })}
-					/>
+					<PlaceInput subscribe={val => this.setState({ placeName: val })} />
 					<View style={s.button}>
 						<Button
 							title="¡Compartir lugar!"
@@ -78,5 +76,5 @@ const s = StyleSheet.create({
 
 export default connect(
 	null,
-	actions
+	sharePlaceActions
 )(SharePlace);
